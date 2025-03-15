@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, String
+from sqlmodel import SQLModel, Field
 
-class Contact:
-    
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, nullable=False)
-    phone = Column(String, nullable=False)
+class Contact(SQLModel, table=True):
+    id: int = Field(default=None, primary_key=True)
+    name: str = Field(nullable=False)
+    phone: str = Field(nullable=False)
