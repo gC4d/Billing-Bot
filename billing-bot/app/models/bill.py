@@ -1,8 +1,10 @@
-from sqlalchemy import Column, Float, Integer, String
+from sqlmodel import Field, SQLModel
 
-class Bill:
+class Bill(SQLModel, table=True):
     
-    id = Column(Integer, primary_key=True, index=True)
-    description = Column(String, nullable=False)
-    amount = Column(Float, nullable=False)
-    
+    id: int = Field(default=None, primary_key=True)
+    description: str = Field(default=None)
+    amount: float = Field(nullable=False)
+    payment_date: int = Field(nullable=False)
+    billing_interval: int = Field(nullable=False)
+    payment_cycles: int = Field(nullable=False)
