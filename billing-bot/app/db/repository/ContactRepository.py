@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlmodel import SQLModel, Session, select
 from app.models.contacts import Contact
 
 class ContactRepository:
@@ -7,10 +7,12 @@ class ContactRepository:
         self.db = db
 
     def get_contact(self, contact_id: int):
-        return self.db.query(Contact).filter(Contact.id == contact_id).first()
+        statement = select(Contact).where(Contact.id == contact_id)
+        return self.db.exec(statement).first()
 
     def get_all_contacts(self):
-        return self.db.query(Contact).all()
+        statement = select(Contact)
+        return self.db.exec(statement).all()
 
     def create_contact(self, name: str, phone: str):
         new_contact = Contact(name=name, phone=phone)
@@ -20,18 +22,21 @@ class ContactRepository:
         return new_contact
 
     def update_contact(self, contact_id: int, name: str = None, phone: str = None):
-        contact = self.db.query(Contact).filter(Contact.id == contact_id).first()
+        statement = select(Contact).where(Contact.id == contact_id)
+        contact = self.db.exec(statement).first()
         if contact:
             if name:
                 contact.name = name
             if phone:
                 contact.phone = phone
+            self.db.add(contact)
             self.db.commit()
             self.db.refresh(contact)
         return contact
 
     def delete_contact(self, contact_id: int):
-        contact = self.db.query(Contact).filter(Contact.id == contact_id).first()
+        statement = select(Contact).where(Contact.id == contact_id)
+        contact = self.db.exec(statement).first()
         if contact:
             self.db.delete(contact)
             self.db.commit()

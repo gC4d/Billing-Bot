@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlmodel import Session, select
 from app.models.bill import Bill
 
 class BillRepository:
@@ -7,10 +7,12 @@ class BillRepository:
         self.db = db
 
     def get_bill(self, bill_id: int):
-        return self.db.query(Bill).filter(Bill.id == bill_id).first()
+        statement = select(Bill).where(Bill.id == bill_id)
+        return self.db.exec(statement).first()
 
     def get_all_bills(self):
-        return self.db.query(Bill).all()
+        statement = select(Bill)
+        return self.db.exec(statement).all()
 
     def create_bill(self, bill: Bill):
         self.db.add(bill)
