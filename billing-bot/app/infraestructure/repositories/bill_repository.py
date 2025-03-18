@@ -1,5 +1,5 @@
 from sqlmodel import Session, select
-from app.models.bill import Bill
+from app.domain.models.bill import Bill
 
 class BillRepository:
 

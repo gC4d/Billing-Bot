@@ -1,6 +1,6 @@
 from sqlmodel import Session
 from app.infraestructure.repositories import BillRepository
-from app.models.bill import Bill, BillCreate, BillUpdate
+from app.domain.models.bill import Bill, BillCreate, BillUpdate
 
 
 class BillService:
