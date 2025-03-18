@@ -17,12 +17,15 @@ class IBillRepository(ABC):
     
     @abstractmethod
     def create(self, bill: Bill) -> Bill:
+        """Create a new bill."""
         pass
 
     @abstractmethod
     def update(self, bill: Bill) -> Bill:
+        """Update an existing bill."""
         pass
 
     @abstractmethod
     def delete(self, bill_id: int) -> None:
+        """Delete an existing bill."""
         pass
