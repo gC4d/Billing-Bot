@@ -1,31 +1,14 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List
+
+from sqlmodel import UUID
 from app.domain.models.bill import Bill
+from app.domain.models.costumer import Costumer
+from app.domain.repositories.base_repository import BaseRepository
 
-
-class IBillRepository(ABC):
+class IBillRepository(ABC, BaseRepository[Bill]):
     
     @abstractmethod
-    def get_by_id(self, id: int) -> Optional[Bill]:
-        """Retrieve a bill by its unique identifier."""
-        pass
-
-    @abstractmethod
-    def get_all(self) -> List[Bill]:
-        """Retrieve a bill by its unique identifier."""
-        pass
-    
-    @abstractmethod
-    def create(self, bill: Bill) -> Bill:
-        """Create a new bill."""
-        pass
-
-    @abstractmethod
-    def update(self, bill: Bill) -> Bill:
-        """Update an existing bill."""
-        pass
-
-    @abstractmethod
-    def delete(self, id: int) -> None:
-        """Delete an existing bill."""
+    def get_costumers(self, id: int) -> List[Costumer]:
+        """Retrieve all costumers by a bill's unique identifier."""
         pass
