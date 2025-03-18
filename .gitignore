@@ -128,3 +128,4 @@ temp/
 **/migrations/*
 !**/migrations/
 !**/migrations/__init__.py
+billing-bot/.env
