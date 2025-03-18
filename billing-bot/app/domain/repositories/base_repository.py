@@ -7,7 +7,7 @@ T = TypeVar('T')
 
 class BaseRepository(ABC, Generic[T]):
     @abstractmethod
-    def get_by_id(self, entity_id: int|UUID) -> Optional[T]:
+    def get_by_id(self, entity_id: int | UUID) -> Optional[T]:
         """Retrieve a entity by its unique identifier."""
         pass
 
@@ -27,6 +27,6 @@ class BaseRepository(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def delete(self, entity_id: int) -> None:
+    def delete(self, entity_id: int | UUID) -> None:
         """Delete an existing entity."""
         pass

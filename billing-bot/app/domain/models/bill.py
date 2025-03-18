@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from typing import List
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import UUID, Field, Relationship, SQLModel
 from app.domain.models.costumer import Costumer
 from app.domain.models.costumer_bill import CostumerBill
 
 class Bill(SQLModel, table=True):
     
-    id: int = Field(default=None, primary_key=True)
+    id: UUID = Field(default=None, primary_key=True)
     description: str = Field(default=None)
     amount: float = Field(nullable=False)
     payment_date: int = Field(nullable=False)

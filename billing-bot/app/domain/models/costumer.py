@@ -1,11 +1,11 @@
 from __future__ import annotations
 from typing import List
-from sqlmodel import Relationship, SQLModel, Field
+from sqlmodel import UUID, Relationship, SQLModel, Field
 from app.domain.models.bill import Bill
 from app.domain.models.costumer_bill import CostumerBill
 
 class Costumer(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
+    id: UUID = Field(default=None, primary_key=True)
     name: str = Field(nullable=False)
     phone: str = Field(nullable=False)
     

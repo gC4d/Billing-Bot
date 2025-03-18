@@ -9,6 +9,6 @@ from app.domain.repositories.base_repository import BaseRepository
 class IBillRepository(ABC, BaseRepository[Bill]):
     
     @abstractmethod
-    def get_costumers(self, id: int) -> List[Costumer]:
+    def get_costumers(self, id: int | UUID) -> List[Costumer]:
         """Retrieve all costumers by a bill's unique identifier."""
         pass
