@@ -26,6 +26,6 @@ class IBillRepository(ABC):
         pass
 
     @abstractmethod
-    def delete(self, bill_id: int) -> None:
+    def delete(self, id: int) -> None:
         """Delete an existing bill."""
         pass
