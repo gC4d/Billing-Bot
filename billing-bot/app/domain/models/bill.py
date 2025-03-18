@@ -1,4 +1,9 @@
-from sqlmodel import Field, SQLModel
+from __future__ import annotations
+
+from typing import List
+from sqlmodel import Field, Relationship, SQLModel
+from app.domain.models.costumer import Costumer
+from app.domain.models.costumer_bill import CostumerBill
 
 class Bill(SQLModel, table=True):
     
@@ -8,3 +13,5 @@ class Bill(SQLModel, table=True):
     payment_date: int = Field(nullable=False)
     billing_interval: int = Field(nullable=False)
     payment_cycles: int = Field(nullable=False)
+    
+    costumers : List[Costumer] = Relationship(back_populates="bill", link_model=CostumerBill)
