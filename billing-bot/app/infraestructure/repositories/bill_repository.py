@@ -32,7 +32,6 @@ class BillRepository(IBillRepository):
         if existing_bill:
             existing_bill.description = bill.description
             existing_bill.amount = bill.amount
-            existing_bill.payment_date = bill.payment_date
             existing_bill.billing_interval = bill.billing_interval
             existing_bill.payment_cycles = bill.payment_cycles
             self.db.commit()
