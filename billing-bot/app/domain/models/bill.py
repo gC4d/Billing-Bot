@@ -1,39 +1,58 @@
 from __future__ import annotations
 
+import datetime
 from typing import List
-from sqlmodel import UUID, Field, Relationship, SQLModel
+from sqlmodel import UUID, Enum, Field, Relationship, SQLModel
 from app.domain.models.costumer import Costumer
 from app.domain.models.costumer_bill import CostumerBill
 from app.domain.models.bill_payment_schedule import BillPaymentSchedule
 
+
+class BillingInterval(str, Enum):
+    MONTHLY = "monthly"
+    QUARTERLY = "quarterly"
+    BIANNUALLY = "biannually"
+    ANNUALLY = "annually"
+
+
+class BillStatus(str, Enum):
+    PENDING = "pending"
+    PAID = "paid"
+    OVERDUE = "overdue"
+
+
 class BillFieldConfig:
     DESCRIPTION_MAX = 200
     DESCRIPTION_MIN = 10
-    
+
     BILLING_MIN_INTERVAL = 1
     BILLING_MAX_INTERVAL = 12
-    
+
     PAYMENT_CYCLES_MIN = 1
 
+
 class Bill(SQLModel, table=True):
-    
+
     id: UUID = Field(default=None, primary_key=True)
     description: str = Field(
-        default=None, 
+        default=None,
         max_length=BillFieldConfig.DESCRIPTION_MAX,
-        min_length=BillFieldConfig.DESCRIPTION_MIN
+        min_length=BillFieldConfig.DESCRIPTION_MIN,
     )
     amount: float = Field(nullable=False)
-    billing_interval: int = Field(
-        nullable=False,
-        min_length=BillFieldConfig.BILLING_MIN_INTERVAL,
-        max_length=BillFieldConfig.BILLING_MAX_INTERVAL
+    billing_interval: BillingInterval = Field(
+        default=BillingInterval.MONTHLY, nullable=False
     )
     payment_cycles: int = Field(
-        nullable=False,
-        min_length=BillFieldConfig.PAYMENT_CYCLES_MIN
+        default=1, nullable=False, ge=BillFieldConfig.PAYMENT_CYCLES_MIN
     )
-    
-    costumers: List[Costumer] = Relationship(back_populates="bill", link_model=CostumerBill)
-    payment_schedule: List[BillPaymentSchedule] = Relationship(back_populates="bill")
+    status: BillStatus = Field(default=BillStatus.PENDING, nullable=False)
+    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow, on_update=datetime.utcnow
+    )
 
+    costumers: List[Costumer] = Relationship(
+        back_populates="bill", link_model=CostumerBill
+    )
+    payment_schedule: List[BillPaymentSchedule] = Relationship(back_populates="bill")

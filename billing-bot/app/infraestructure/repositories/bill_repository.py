@@ -2,7 +2,8 @@ from sqlmodel import UUID, Session, select
 from typing import List, Optional
 from app.domain.models.bill import Bill
 from app.domain.models.costumer import Costumer
-from app.domain.repositories.bill_repository import IBillRepository
+from app.domain.repositories.bill_repository_interface import IBillRepository
+
 
 class BillRepository(IBillRepository):
 
@@ -22,7 +23,7 @@ class BillRepository(IBillRepository):
         bill = self.db.exec(statement).first()
         return bill.costumers if bill else []
 
-    def create(self, bill: Bill) -> Bill: 
+    def create(self, bill: Bill) -> Bill:
         self.db.commit()
         self.db.refresh(bill)
         return bill

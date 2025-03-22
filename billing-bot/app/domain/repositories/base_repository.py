@@ -3,7 +3,8 @@ from typing import TypeVar, Generic, List, Optional
 
 from sqlmodel import UUID
 
-T = TypeVar('T')
+T = TypeVar("T")
+
 
 class BaseRepository(ABC, Generic[T]):
     @abstractmethod

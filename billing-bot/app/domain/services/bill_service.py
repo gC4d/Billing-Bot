@@ -2,8 +2,9 @@ from typing import Optional
 from fastapi import Depends
 from sqlmodel import Session
 from app.infraestructure.database.session import get_db
-from app.infraestructure.repositories import BillRepository
-from app.domain.models.bill import Bill, BillCreate, BillUpdate
+from app.infraestructure.repositories.bill_repository import BillRepository
+from app.domain.models.bill import Bill
+from app.api.schemas.bill import BillCreate, BillUpdate
 
 
 class BillService:
@@ -27,7 +28,7 @@ class BillService:
 
     def delete_bill(self, bill_id: int) -> Bill:
         return self.bill_repo.delete_bill(bill_id)
-    
+
     @staticmethod
     def get_instance(db: Session = Depends(get_db)):
         return BillService(db)

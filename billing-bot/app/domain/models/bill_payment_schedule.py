@@ -9,5 +9,5 @@ class BillPaymentSchedule(SQLModel, table=True):
     id: UUID = Field(default=None, primary_key=True)
     bill_id: UUID = Field(foreign_key="bill.id")
     payment_date: date = Field(nullable=False)
-    
+
     bill: Bill = Relationship(back_populates="payment_schedule")

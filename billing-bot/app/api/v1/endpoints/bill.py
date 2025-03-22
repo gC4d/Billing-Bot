@@ -6,10 +6,10 @@ from app.api.schemas.bill import BillCreate, BillUpdate
 
 router = APIRouter()
 
+
 @router.get("/bills/{bill_id}", response_model=Bill)
 def get_bill(
-    bill_id: int | UUID, 
-    bill_service: BillService = Depends(BillService.get_instance)
+    bill_id: int | UUID, bill_service: BillService = Depends(BillService.get_instance)
 ):
     """
     Retrieve a bill by its ID.
@@ -21,10 +21,9 @@ def get_bill(
     """
     return bill_service.get_bill(bill_id)
 
+
 @router.get("/bills", response_model=list[Bill])
-def get_all_bills(
-    bill_service: BillService = Depends(BillService.get_instance)
-):
+def get_all_bills(bill_service: BillService = Depends(BillService.get_instance)):
     """
     Retrieve all bills.
 
@@ -38,10 +37,10 @@ def get_all_bills(
     """
     return bill_service.get_all_bills()
 
+
 @router.post("/bills", response_model=Bill, status_code=status.HTTP_201_CREATED)
 def create_bill(
-    bill_data: BillCreate, 
-    bill_service: BillService = Depends(BillService.get_instance)
+    bill_data: BillCreate, bill_service: BillService = Depends(BillService.get_instance)
 ):
     """
     Create a new bill.
@@ -53,11 +52,12 @@ def create_bill(
     """
     return bill_service.create_bill(bill_data)
 
+
 @router.put("/bills/{bill_id}", response_model=Bill)
 def update_bill(
-    bill_id: int | UUID, 
-    bill_data: BillUpdate, 
-    bill_service: BillService = Depends(BillService.get_instance)
+    bill_id: int | UUID,
+    bill_data: BillUpdate,
+    bill_service: BillService = Depends(BillService.get_instance),
 ):
     """
     Update an existing bill.
@@ -74,10 +74,10 @@ def update_bill(
     """
     return bill_service.update_bill(bill_id, bill_data)
 
+
 @router.delete("/bills/{bill_id}", response_model=Bill)
 def delete_bill(
-    bill_id: int | UUID, 
-    bill_service: BillService = Depends(BillService.get_instance)
+    bill_id: int | UUID, bill_service: BillService = Depends(BillService.get_instance)
 ):
     """
     Delete a bill by its ID.

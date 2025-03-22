@@ -1,6 +1,7 @@
-from typing import List, Optional
+from typing import Optional
 from uuid import UUID
 from pydantic import BaseModel
+
 
 class BillBase(BaseModel):
     description: Optional[str] = None
@@ -9,15 +10,18 @@ class BillBase(BaseModel):
     billing_interval: int
     payment_cycles: int
 
+
 class BillCreate(BillBase):
     pass
 
-class BillUpdate(BillBase):
+
+class BillUpdate():
     description: Optional[str] = None
     amount: Optional[float] = None
     payment_date: Optional[int] = None
     billing_interval: Optional[int] = None
     payment_cycles: Optional[int] = None
+
 
 class BillInDBBase(BillBase):
     id: UUID
@@ -25,8 +29,10 @@ class BillInDBBase(BillBase):
     class Config:
         orm_mode: True
 
+
 class Bill(BillInDBBase):
     pass
+
 
 class BillInDB(BillInDBBase):
     pass

@@ -1,5 +1,6 @@
 from pydantic import BaseSettings
 
+
 class Settings(BaseSettings):
     app_name: str = "My FastAPI Project"
     database_url: str
@@ -17,6 +18,7 @@ class Settings(BaseSettings):
     db_host: str
     db_port: str
     db_name: str
+
 
 settings = Settings()
 settings.database_url = settings.sqlmodel_database_url
