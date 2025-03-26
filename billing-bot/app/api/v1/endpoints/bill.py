@@ -9,12 +9,12 @@ router = APIRouter()
 
 @router.get("/bills/{bill_id}", response_model=Bill)
 def get_bill(
-    bill_id: int | UUID, bill_service: BillService = Depends(BillService.get_instance)
+    bill_id: UUID, bill_service: BillService = Depends(BillService.get_instance)
 ):
     """
     Retrieve a bill by its ID.
     Args:
-        bill_id (int | UUID): The unique identifier of the bill.
+        bill_id (UUID): The unique identifier of the bill.
         bill_service (BillService, optional): The service instance to handle bill operations. Defaults to BillService.get_instance.
     Returns:
         Bill: The bill object corresponding to the provided ID.
@@ -55,7 +55,7 @@ def create_bill(
 
 @router.put("/bills/{bill_id}", response_model=Bill)
 def update_bill(
-    bill_id: int | UUID,
+    bill_id: UUID,
     bill_data: BillUpdate,
     bill_service: BillService = Depends(BillService.get_instance),
 ):
@@ -65,7 +65,7 @@ def update_bill(
     This endpoint allows updating the details of an existing bill identified by its ID.
 
     Args:
-        bill_id (int | UUID): The unique identifier of the bill to be updated.
+        bill_id (UUID): The unique identifier of the bill to be updated.
         bill_data (BillUpdate): The new data for the bill.
         bill_service (BillService, optional): The service instance to handle bill operations. Defaults to BillService.get_instance.
 
@@ -77,7 +77,7 @@ def update_bill(
 
 @router.delete("/bills/{bill_id}", response_model=Bill)
 def delete_bill(
-    bill_id: int | UUID, bill_service: BillService = Depends(BillService.get_instance)
+    bill_id: UUID, bill_service: BillService = Depends(BillService.get_instance)
 ):
     """
     Delete a bill by its ID.
