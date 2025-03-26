@@ -16,7 +16,7 @@ class BillRepository(IBillRepository):
 
     def get_all(self) -> List[Bill]:
         statement = select(Bill)
-        return self.db.exec(statement).all()
+        return list(self.db.exec(statement).all())
 
     def get_costumers(self, id: int | UUID) -> List[Costumer]:
         statement = select(Bill).where(Bill.id == id)
@@ -28,7 +28,7 @@ class BillRepository(IBillRepository):
         self.db.refresh(bill)
         return bill
 
-    def update(self, bill: Bill) -> Bill:
+    def update(self, bill: Bill) -> Optional[Bill]:
         existing_bill = self.get_by_id(bill.id)
         if existing_bill:
             existing_bill.description = bill.description

@@ -23,7 +23,7 @@ class BaseRepository(ABC, Generic[T]):
         pass
 
     @abstractmethod
-    def update(self, entity: T) -> T:
+    def update(self, entity: T) -> Optional[T]:
         """Update an existing entity."""
         pass
 

@@ -23,8 +23,15 @@ class BillService:
         return self.bill_repo.create(new_bill)
 
     def update_bill(self, bill_id: UUID, bill_data: BillUpdate) -> Bill:
-        updated_bill = Bill.model_validate(bill_data)
-        return self.bill_repo.update(bill_id, updated_bill)
+        updated_bill_dto = Bill.model_validate(bill_data)
+
+        updated_bill_dto.id = bill_id
+
+        updated_bill = self.bill_repo.update(updated_bill_dto)
+        if updated_bill is None:
+            raise Exception(f"Bill with id {bill_id} not found")
+
+        return updated_bill
 
     def delete_bill(self, bill_id: UUID) -> None:
         self.bill_repo.delete(bill_id)
