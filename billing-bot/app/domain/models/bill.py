@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List
 from sqlmodel import UUID, Enum, Field, Relationship, SQLModel
 from app.domain.models.costumer import Costumer
@@ -47,9 +47,10 @@ class Bill(SQLModel, table=True):
         default=1, nullable=False, ge=BillFieldConfig.PAYMENT_CYCLES_MIN
     )
     status: BillStatus = Field(default=BillStatus.PENDING, nullable=False)
-    created_at: datetime = Field(default_factory=datetime.utcnow, index=True)
+    created_at: datetime = Field(default=datetime.now(timezone.utc), index=True)
     updated_at: datetime = Field(
-        default_factory=datetime.utcnow, on_update=datetime.utcnow
+        default=datetime.now(timezone.utc),
+        sa_column_kwargs={"onupdate": datetime.now(timezone.utc)}
     )
 
     costumers: List[Costumer] = Relationship(
