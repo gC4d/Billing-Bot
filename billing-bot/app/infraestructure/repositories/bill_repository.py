@@ -35,6 +35,9 @@ class BillRepository(IBillRepository):
             existing_bill.amount = bill.amount
             existing_bill.billing_interval = bill.billing_interval
             existing_bill.payment_cycles = bill.payment_cycles
+            existing_bill.status = bill.status
+            existing_bill.updated_at = bill.updated_at
+            
             self.db.commit()
             self.db.refresh(existing_bill)
         return existing_bill
