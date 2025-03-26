@@ -22,12 +22,12 @@ class BillService:
         new_bill = Bill.model_validate(bill_data)
         return self.bill_repo.create(new_bill)
 
-    def update_bill(self, bill_id: int, bill_data: BillUpdate) -> Bill:
+    def update_bill(self, bill_id: UUID, bill_data: BillUpdate) -> Bill:
         updated_bill = Bill.model_validate(bill_data)
         return self.bill_repo.update(bill_id, updated_bill)
 
-    def delete_bill(self, bill_id: int) -> Bill:
-        return self.bill_repo.delete(bill_id)
+    def delete_bill(self, bill_id: UUID) -> None:
+        self.bill_repo.delete(bill_id)
 
     @staticmethod
     def get_instance(db: Session = Depends(get_db)):

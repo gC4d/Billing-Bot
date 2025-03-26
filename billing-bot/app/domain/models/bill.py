@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import datetime
+from datetime import datetime
 from typing import List
 from sqlmodel import UUID, Enum, Field, Relationship, SQLModel
 from app.domain.models.costumer import Costumer

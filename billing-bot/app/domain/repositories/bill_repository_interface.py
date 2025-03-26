@@ -7,7 +7,7 @@ from app.domain.models.costumer import Costumer
 from app.domain.repositories.base_repository import BaseRepository
 
 
-class IBillRepository(ABC, BaseRepository[Bill]):
+class IBillRepository(BaseRepository[Bill], ABC):
 
     @abstractmethod
     def get_costumers(self, id: int | UUID) -> List[Costumer]:
