@@ -1,7 +1,8 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 import os
 
-class Settings(BaseSettings):    
+
+class Settings(BaseSettings):
     app_name: str = "Billing Bot"
     secret_key: str = "supersecretkey"
 
