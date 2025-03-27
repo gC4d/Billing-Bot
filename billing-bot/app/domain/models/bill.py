@@ -3,8 +3,8 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import List
 from sqlmodel import UUID, Enum, Field, Relationship, SQLModel
-from app.domain.models.costumer import Costumer
-from app.domain.models.costumer_bill import CostumerBill
+from app.domain.models.customer import Customer
+from app.domain.models.customer_bill import CustomerBill
 from app.domain.models.bill_payment_schedule import BillPaymentSchedule
 
 
@@ -50,10 +50,10 @@ class Bill(SQLModel, table=True):
     created_at: datetime = Field(default=datetime.now(timezone.utc), index=True)
     updated_at: datetime = Field(
         default=datetime.now(timezone.utc),
-        sa_column_kwargs={"onupdate": datetime.now(timezone.utc)}
+        sa_column_kwargs={"onupdate": datetime.now(timezone.utc)},
     )
 
-    costumers: List[Costumer] = Relationship(
-        back_populates="bill", link_model=CostumerBill
+    customers: List[Customer] = Relationship(
+        back_populates="bill", link_model=CustomerBill
     )
     payment_schedule: List[BillPaymentSchedule] = Relationship(back_populates="bill")

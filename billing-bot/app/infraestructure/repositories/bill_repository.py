@@ -1,7 +1,7 @@
 from sqlmodel import UUID, Session, select
 from typing import List, Optional
 from app.domain.models.bill import Bill
-from app.domain.models.costumer import Costumer
+from app.domain.models.customer import Customer
 from app.domain.repositories.bill_repository_interface import IBillRepository
 
 
@@ -18,7 +18,7 @@ class BillRepository(IBillRepository):
         statement = select(Bill)
         return list(self.db.exec(statement).all())
 
-    def get_costumers(self, id: int | UUID) -> List[Costumer]:
+    def get_costumers(self, id: int | UUID) -> List[Customer]:
         statement = select(Bill).where(Bill.id == id)
         bill = self.db.exec(statement).first()
         return bill.costumers if bill else []
@@ -37,7 +37,7 @@ class BillRepository(IBillRepository):
             existing_bill.payment_cycles = bill.payment_cycles
             existing_bill.status = bill.status
             existing_bill.updated_at = bill.updated_at
-            
+
             self.db.commit()
             self.db.refresh(existing_bill)
         return existing_bill
