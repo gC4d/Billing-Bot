@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List
 from sqlmodel import UUID, Relationship, SQLModel, Field
 from app.domain.models.bill import Bill
-from app.domain.models.customer_bill import CostumerBill
+from app.domain.models.customer_bill import CustomerBill
 
 
 class CustomerFieldConfig:
@@ -19,4 +19,4 @@ class Customer(SQLModel, table=True):
     )
     phone: str = Field(nullable=False)
 
-    bills: List[Bill] = Relationship(back_populates="customer", link_model=CostumerBill)
+    bills: List[Bill] = Relationship(back_populates="customer", link_model=CustomerBill)
