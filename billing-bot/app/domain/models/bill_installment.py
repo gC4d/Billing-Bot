@@ -14,7 +14,7 @@ class BillInstallment(SQLModel, table=True):
     payment_date: date = Field(nullable=False)
 
     bill: Bill = Relationship(back_populates="bill_installment")
-    
+
     customers: List[Customer] = Relationship(
         back_populates="bill_installment", link_model=CustomerBill
     )

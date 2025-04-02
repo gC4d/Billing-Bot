@@ -3,9 +3,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import List
 from sqlmodel import UUID, Enum, Field, Relationship, SQLModel
-from app.domain.models.customer import Customer
-from app.domain.models.customer_bill import CustomerBill
-from app.domain.models.bill_installment import BillInstallment, BillPaymentSchedule
+from app.domain.models.bill_installment import BillInstallment
 
 
 class BillingInterval(str, Enum):
