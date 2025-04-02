@@ -10,7 +10,7 @@ from app.domain.models.customer_bill import CustomerBill
 class CustomerFieldConfig:
     NAME_MAX = 100
     NAME_MIN = 5
-    PHONE_PATTERN = r'^\+?1?\d{9,15}$'
+    PHONE_PATTERN = r"^\+?1?\d{9,15}$"
 
 
 class Customer(SQLModel, table=True):
@@ -22,10 +22,12 @@ class Customer(SQLModel, table=True):
     )
     phone: str = Field(nullable=False)
 
-    bills: List[Bill] = Relationship(back_populates="customer", link_model=CustomerBill)
+    bill_installments: List[Bill] = Relationship(
+        back_populates="customer", link_model=CustomerBill
+    )
 
-    @field_validator('phone')
+    @field_validator("phone")
     def validate_phone(cls, v):
         if not re.match(CustomerFieldConfig.PHONE_PATTERN, v):
-            raise ValueError('Invalid phone number')
+            raise ValueError("Invalid phone number")
         return v
