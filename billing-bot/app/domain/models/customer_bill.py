@@ -7,6 +7,6 @@ class CustomerBill(SQLModel, table=True):
         default=None, primary_key=True, foreign_key="customer.id"
     )
 
-    bill_id: Optional[UUID] = Field(
-        default=None, primary_key=True, foreign_key="bill.id"
+    bill_installment_id: Optional[UUID] = Field(
+        default=None, primary_key=True, foreign_key="bill_installment.id"
     )

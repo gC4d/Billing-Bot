@@ -5,7 +5,7 @@ from typing import List
 from sqlmodel import UUID, Enum, Field, Relationship, SQLModel
 from app.domain.models.customer import Customer
 from app.domain.models.customer_bill import CustomerBill
-from app.domain.models.bill_payment_schedule import BillPaymentSchedule
+from app.domain.models.bill_installment import BillInstallment, BillPaymentSchedule
 
 
 class BillingInterval(str, Enum):
@@ -25,10 +25,7 @@ class BillFieldConfig:
     DESCRIPTION_MAX = 200
     DESCRIPTION_MIN = 10
 
-    BILLING_MIN_INTERVAL = 1
-    BILLING_MAX_INTERVAL = 12
-
-    PAYMENT_CYCLES_MIN = 1
+    PAYMENT_CYCLES_MIN = 0
 
 
 class Bill(SQLModel, table=True):
@@ -44,7 +41,7 @@ class Bill(SQLModel, table=True):
         default=BillingInterval.MONTHLY, nullable=False
     )
     payment_cycles: int = Field(
-        default=1, nullable=False, ge=BillFieldConfig.PAYMENT_CYCLES_MIN
+        default=0, nullable=False, ge=BillFieldConfig.PAYMENT_CYCLES_MIN
     )
     status: BillStatus = Field(default=BillStatus.PENDING, nullable=False)
     created_at: datetime = Field(default=datetime.now(timezone.utc), index=True)
@@ -53,7 +50,4 @@ class Bill(SQLModel, table=True):
         sa_column_kwargs={"onupdate": datetime.now(timezone.utc)},
     )
 
-    customers: List[Customer] = Relationship(
-        back_populates="bill", link_model=CustomerBill
-    )
-    payment_schedule: List[BillPaymentSchedule] = Relationship(back_populates="bill")
+    bill_installment: List[BillInstallment] = Relationship(back_populates="bill")
